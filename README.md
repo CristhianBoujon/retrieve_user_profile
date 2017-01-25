@@ -17,3 +17,6 @@ You will need a user token. For testing purposes you can get a user token from h
     curl --header "token:<YOUR_USER_TOKEN>" http://0.0.0.0:8888/api/profile/facebook/me
 
 You can use and user facebook id instead of `/me`
+
+# Thanks
+Thank you for the opportunity :).

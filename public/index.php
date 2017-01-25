@@ -1,30 +1,39 @@
 <?php
-if (PHP_SAPI == 'cli-server') {
-    // To help the built-in PHP dev server, check if the request was actually for
-    // something which should probably be served as a static file
-    $url  = parse_url($_SERVER['REQUEST_URI']);
-    $file = __DIR__ . $url['path'];
-    if (is_file($file)) {
-        return false;
-    }
-}
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
-require __DIR__ . '/../vendor/autoload.php';
+require '../vendor/autoload.php';
 
-session_start();
 
-// Instantiate the app
-$settings = require __DIR__ . '/../src/settings.php';
+$settings = include  '../src/settings.php';
 $app = new \Slim\App($settings);
 
-// Set up dependencies
-require __DIR__ . '/../src/dependencies.php';
+$app->get('/api/profile/facebook/{id}', function (Request $request, Response $response)  use ($app){
 
-// Register middleware
-require __DIR__ . '/../src/middleware.php';
+    $token = $request->getHeaders()['HTTP_TOKEN'][0]; 
+      
+    $fbSettings = $this->get('settings')['fbSettings'];
 
-// Register routes
-require __DIR__ . '/../src/routes.php';
+    $fb = new Facebook\Facebook([
+            'app_id' => $fbSettings['app_id'],
+            'app_secret' => $fbSettings['app_secret'],
+            'default_graph_version' => $fbSettings['default_graph_version'],
+    ]);
 
-// Run app
+    try {
+      // Returns a `Facebook\FacebookResponse` object
+      $fbResponse = $fb->get('/' . $request->getAttribute('id') . '?fields=link, name, birthday', $token);
+    } catch(Facebook\Exceptions\FacebookResponseException $e) {
+        return $response->withStatus(401)->withJson(['msg' => $e->getMessage()]);
+      exit;
+    } catch(Facebook\Exceptions\FacebookSDKException $e) {
+        return $response->withStatus(401)->withJson(['msg' => $e->getMessage()]);
+      exit;
+    }
+
+    $user = $fbResponse->getGraphUser();
+    return $response->withJson($user->asArray());
+
+});
+
 $app->run();

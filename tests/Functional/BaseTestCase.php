@@ -21,7 +21,14 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      * @var bool
      */
     protected $withMiddleware = true;
+    protected $settings;
 
+    function setUp()
+    {
+        // Use the application settings
+        $settingsArray = include __DIR__ . '/../../src/settings.php';
+        $this->settings = $settingsArray['settings'];
+    }
     /**
      * Process the application given a request method and URI
      *
@@ -36,7 +43,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         $environment = Environment::mock(
             [
                 'REQUEST_METHOD' => $requestMethod,
-                'REQUEST_URI' => $requestUri
+                'REQUEST_URI' => $requestUri,
             ]
         );
 
@@ -51,11 +58,8 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         // Set up a response object
         $response = new Response();
 
-        // Use the application settings
-        $settings = require __DIR__ . '/../../src/settings.php';
-
         // Instantiate the application
-        $app = new App($settings);
+        $app = new App($this->settings);
 
         // Set up dependencies
         require __DIR__ . '/../../src/dependencies.php';

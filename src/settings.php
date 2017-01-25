@@ -15,5 +15,16 @@ return [
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
+
+        // Facebook settings
+        'fbSettings' => [
+            'app_id' => '',
+            'app_secret' => '',
+            'default_graph_version' => 'v2.8',
+            'http_client_handler' => 'stream'
+        ],
+
+        // Server
+        'server' => 'http://0.0.0.0:8888/'
     ],
 ];

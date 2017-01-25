@@ -1,12 +1,12 @@
 # Download and Install
-From console just type the command 
+From console just type the commands: 
     
     git clone git://github.com/Overflow012/retrieve_user_profile.git
     cd retrieve_user_profile
     composer install
 
 # Set up
-You will need a facebook app_id and app_secret. For testing purposes you can get a user token from https://developers.facebook.com/tools/accesstoken/
+You will need a facebook `app_id` and `app_secret`. For testing purposes you can get a user token from https://developers.facebook.com/tools/accesstoken/
 
 # Run the app
     cd public

@@ -6,7 +6,7 @@ From console just type the commands:
     composer install
 
 # Set up
-You will need a facebook `app_id` and `app_secret`. For testing purposes you can get a user token from https://developers.facebook.com/tools/accesstoken/
+You will need a facebook `app_id` and `app_secret`.
 
 # Run the app
     cd public

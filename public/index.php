@@ -11,13 +11,14 @@ $app = new \Slim\App($settings);
 $app->get('/api/profile/facebook/{id}', function (Request $request, Response $response)  use ($app){
 
     $token = $request->getHeaders()['HTTP_TOKEN'][0]; 
-      
+
     $fbSettings = $this->get('settings')['fbSettings'];
 
     $fb = new Facebook\Facebook([
             'app_id' => $fbSettings['app_id'],
             'app_secret' => $fbSettings['app_secret'],
             'default_graph_version' => $fbSettings['default_graph_version'],
+            'http_client_handler' => $fbSettings['http_client_handler']
     ]);
 
     try {

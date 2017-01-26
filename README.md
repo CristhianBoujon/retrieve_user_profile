@@ -1,26 +1,23 @@
-# Slim Framework 3 Skeleton Application
+# Download and Install
+From console just type the commands: 
+    
+    git clone git://github.com/Overflow012/retrieve_user_profile.git
+    cd retrieve_user_profile
+    composer install
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 3 application. This application uses the latest Slim 3 with the PHP-View template renderer. It also uses the Monolog logger.
+# Set up
+You will need a facebook `app_id` and `app_secret`.
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+# Run the app
+    cd public
+    php -S 0.0.0.0:8888
 
-## Install the Application
+# Using App
+You will need a user token. For testing purposes you can get a user token from https://developers.facebook.com/tools/accesstoken/
 
-Run this command from the directory in which you want to install your new Slim Framework application.
+    curl --header "token:<YOUR_USER_TOKEN>" http://0.0.0.0:8888/api/profile/facebook/me
 
-    php composer.phar create-project slim/slim-skeleton [my-app-name]
+You can use and user facebook id instead of `/me`
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
-
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writeable.
-
-To run the application in development, you can also run this command. 
-
-	php composer.phar start
-
-Run this command to run the test suite
-
-	php composer.phar test
-
-That's it! Now go build something cool.
+# Thanks
+Thank you for the opportunity :).
